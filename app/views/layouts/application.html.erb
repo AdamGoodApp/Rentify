@@ -3,13 +3,16 @@
 <head>
   <title>Rentify</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+    <%= render partial: 'shared/header' %>
 
-<%= render partial: 'shared/header' %>
-<%= yield %>
+    <%= yield %>
 
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["maps_key"] %>&callback=initMap">
+    </script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
