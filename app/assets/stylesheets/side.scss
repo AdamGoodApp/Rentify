@@ -1,0 +1,30 @@
+.sidebar {
+  background-color: #f19100;
+  height: 100%;
+  padding: 10px;
+  position: absolute;
+  top: 50px;
+  z-index: 100;
+
+  span {
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+  ul {
+    padding: 0px;
+
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+.sidebar-menu-collapsed {
+  width: 50px;
+}
+
+.sidebar-menu-expanded {
+  width: 200px;
+}

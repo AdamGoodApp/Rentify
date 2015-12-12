@@ -1,6 +1,7 @@
 $( document ).ready(function() {
 
   var rentifyOffice = {lat:51.519974, lng: -0.098398};
+  var destinationPos = {lat: 51.520535, lng: -0.098430};
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: rentifyOffice,
@@ -16,6 +17,14 @@ $( document ).ready(function() {
   });
   home.addListener('click', toggleBounce);
 
+  var destination = new google.maps.Marker({
+    draggable: true,
+    position: destinationPos,
+    title:"Destination",
+    animation: google.maps.Animation.DROP,
+    icon: "<%= asset_path('marker-go.png') %>"
+  });
+
   function toggleBounce() {
     if (home.getAnimation() !== null) {
       home.setAnimation(null);
@@ -23,5 +32,9 @@ $( document ).ready(function() {
       home.setAnimation(google.maps.Animation.BOUNCE);
     }
   }
+
+  $("#add-marker").on( "click", function() {
+    destination.setMap(map);
+  });
 
 });
