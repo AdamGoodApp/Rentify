@@ -1,0 +1,27 @@
+$( document ).ready(function() {
+
+  var rentifyOffice = {lat:51.519974, lng: -0.098398};
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: rentifyOffice,
+    zoom: 17
+  });
+
+  var home = new google.maps.Marker({
+    position: rentifyOffice,
+    map: map,
+    animation: google.maps.Animation.DROP,
+    title: 'Rentify Office',
+    icon: "<%= asset_path('marker.png') %>"
+  });
+  home.addListener('click', toggleBounce);
+
+  function toggleBounce() {
+    if (home.getAnimation() !== null) {
+      home.setAnimation(null);
+    } else {
+      home.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+
+});
