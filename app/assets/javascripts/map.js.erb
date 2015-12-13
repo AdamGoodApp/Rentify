@@ -37,7 +37,7 @@ $( document ).ready(function() {
         }
 
         google.maps.event.addListener(destination, 'dragend', function(event) {
-            calcRoute(event.latLng);
+            drawRoute(event.latLng);
         });
     }
 
@@ -49,7 +49,7 @@ $( document ).ready(function() {
         }
     }
 
-    function calcRoute(endPos) {
+    function drawRoute(endPos) {
         var end = endPos;
         var request = {
             origin: rentifyOffice,
@@ -72,7 +72,7 @@ $( document ).ready(function() {
 
     google.maps.event.addListener(map, 'rightclick', function(event) {
         createMarker(event.latLng);
-        calcRoute(event.latLng);
+        drawRoute(event.latLng);
     });
 
 

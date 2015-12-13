@@ -2,3 +2,11 @@
 @import "bootstrap";
 @import "side";
 @import "map";
+
+.navbar-brand {
+  padding: 8px;
+
+  img {
+    width: 130px;
+  }
+}
