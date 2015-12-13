@@ -17,13 +17,15 @@ $( document ).ready(function() {
   });
   home.addListener('click', toggleBounce);
 
-  var destination = new google.maps.Marker({
-    draggable: true,
-    position: destinationPos,
-    title:"Destination",
-    animation: google.maps.Animation.DROP,
-    icon: "<%= asset_path('marker-go.png') %>"
-  });
+  function createMarker(pos) {
+    new google.maps.Marker({
+      draggable: true,
+      position: pos || destinationPos,
+      title:"Destination",
+      animation: google.maps.Animation.DROP,
+      icon: "<%= asset_path('marker-go.png') %>"
+    }).setMap(map);
+  }
 
   function toggleBounce() {
     if (home.getAnimation() !== null) {
@@ -34,7 +36,11 @@ $( document ).ready(function() {
   }
 
   $("#add-marker").on( "click", function() {
-    destination.setMap(map);
+    createMarker();
+  });
+
+  google.maps.event.addListener(map, 'rightclick', function(event) {
+    createMarker(event.latLng);
   });
 
 });
