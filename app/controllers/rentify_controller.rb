@@ -7,7 +7,11 @@ class RentifyController < ApplicationController
   end
 
   def calc_time()
-    CityMapper.new(destination_params, 2).calculate_time!
+     if !@time = CityMapper.new(destination_params, 2).calculate_time!
+       render json: @time
+     else
+       render :nothing => true, :status => 400
+     end
   end
 
   private

@@ -19,11 +19,11 @@ $( document ).ready(function() {
     });
 
     request.done(function( msg ) {
-      $( "#log" ).html( msg );
+      alert( msg );
     });
 
     request.fail(function( jqXHR, textStatus ) {
-      alert( "Request failed: " + textStatus );
+      alert( "Sorry we couldn't complete your request" );
     });
   }
 
