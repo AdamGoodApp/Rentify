@@ -10,6 +10,8 @@ Rentify helps negotiators meet landlord and tenants. Rentify calculates travel t
 
 * Click the plus button near the GO. This will alow you to add more locations (Max of 6 due to google limitiations)
 
+* Hover over each marker to see indivdual time estimate
+
 * You can also right click anywhere on the map for a quick time estimate that is based on the current time now.
 
 View live demo here: http://rentify-travel.herokuapp.com/ (Weird issue with google maps not working well with Heroku. Keep reloading page)
