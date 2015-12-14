@@ -3,7 +3,6 @@ $( document ).ready(function() {
   pubnub.subscribe({
     channel: 'SubTest',
     message: function(m){
-      console.log(m);
       calculateTime(m);
     },
     error: function (error) {

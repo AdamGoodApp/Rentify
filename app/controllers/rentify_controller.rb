@@ -19,6 +19,7 @@ class RentifyController < ApplicationController
   def set_keys
     gon.pubnub_pub = ENV["pubnub_pub"]
     gon.pubnub_sub = ENV["pubnub_sub"]
+    gon.geocode_key = ENV["geocode_key"]
   end
 
   def destination_params

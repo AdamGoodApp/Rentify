@@ -79,16 +79,39 @@ $( document ).ready(function() {
         });
     }
 
-    $("#add-marker").on( "click", function() {
-        createMarker();
-    });
+    function geoLocate(address) {
+        var url = "https://maps.googleapis.com/maps/api/geocode/json";
+        var request = $.ajax({
+            url: url,
+            method: "GET",
+            data: {address : address, key: gon.geocode_key }
+        });
+
+        request.done(function( msg ) {
+            var location = msg['results'][0]['geometry']['location'];
+            createMarker({lat: location['lat'], lng: location['lng']});
+            drawRoute({lat: location['lat'], lng: location['lng']});
+            publish({lat: location['lat'], lng: location['lng']});
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert("Sorry, we couldn't find this address");
+        });
+    }
 
     google.maps.event.addListener(map, 'rightclick', function(event) {
+        setMarker(event);
+    });
+
+    function setMarker(event) {
         createMarker(event.latLng);
         drawRoute(event.latLng);
         publish(event.latLng);
+    }
+
+    $('#address-submit').on( "click", function(e) {
+        e.preventDefault();
+        geoLocate($('#address-input').val());
     });
-
-
 
 });
