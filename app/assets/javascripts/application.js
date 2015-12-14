@@ -14,6 +14,8 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
+//= require moment
+//= require bootstrap-datetimepicker
 //= require_tree .
 
 
@@ -27,3 +29,5 @@ $('.glyphicon-plus').on( "click", function(e) {
     $('#add-address').append( "<input type='text' class='form-control address additional-address' placeholder='Address'>" );
   }
 });
+
+$('#datetimepicker1').datetimepicker();

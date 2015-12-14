@@ -71,6 +71,8 @@ $( document ).ready(function() {
 
         request.done(function( msg ) {
             var location = msg['results'][0]['geometry']['location'];
+            var date = $('#time-input').val();
+            publish(location, date);
             createMultipleMarkers(location);
         });
 
@@ -106,10 +108,10 @@ $( document ).ready(function() {
         });
     }
 
-    function publish(endPos) {
+    function publish(endPos, date) {
         pubnub.publish({
             channel: 'SubTest',
-            message: {start: rentifyOffice, end: endPos},
+            message: {start: rentifyOffice, end: endPos, date: date},
             callback : function(m){console.log(m)}
         });
     }

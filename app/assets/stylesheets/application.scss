@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
 @import "side";
 @import "map";
 
@@ -12,10 +13,9 @@
 }
 
 .navbar-middle {
-  left: 50%;
-  margin: 10px 0 0 -50px;
+  left: 26%;
+  margin: 10px 0 0 0;
   position: absolute;
-  width: 105px;
 
   p {
     display: inline-block;
@@ -54,6 +54,12 @@ input#address-input {
     width: 250px;
     position: absolute;
     top: 45px;
-    left: 55px;
+    right: 96px;
+  }
+}
+
+.input-group-addon {
+  input {
+    width: 160px;
   }
 }

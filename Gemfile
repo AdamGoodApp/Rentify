@@ -18,6 +18,8 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'figaro'
 gem 'gon'
 gem 'httparty'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

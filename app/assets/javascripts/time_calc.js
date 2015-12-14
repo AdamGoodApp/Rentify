@@ -18,7 +18,12 @@ $( document ).ready(function() {
     });
 
     request.done(function( msg ) {
-      $('.glyphicon-time p').html(msg + ' min');
+      var time = parseInt($('.glyphicon-time p').html()) || 0;
+      var total = time += msg;
+
+      console.log(total);
+
+      $('.glyphicon-time p').html(total + ' min');
       $('.glyphicon-time').addClass('time-alert');
     });
 
