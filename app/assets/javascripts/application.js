@@ -21,3 +21,7 @@ pubnub = PUBNUB({
   publish_key   : gon.pubnub_pub,
   subscribe_key : gon.pubnub_sub
 });
+
+$('.glyphicon-plus').on( "click", function(e) {
+  $('#add-address').append( "<input type='text' class='form-control address additional-address' placeholder='Address'>" );
+});

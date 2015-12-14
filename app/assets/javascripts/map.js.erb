@@ -9,6 +9,8 @@ $( document ).ready(function() {
     var rentifyOffice = {lat:51.519974, lng: -0.098398};
     var destinationPos = {lat: 51.520535, lng: -0.098430};
     var destination;
+    var multipleDestinations = [];
+    var waypoints = [];
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: rentifyOffice,
@@ -58,7 +60,9 @@ $( document ).ready(function() {
         var end = endPos;
         var request = {
             origin: rentifyOffice,
-            destination: end,
+            destination: multipleDestinations[multipleDestinations.length-1] || end,
+            waypoints: waypoints,
+            optimizeWaypoints: false,
             travelMode: google.maps.TravelMode.WALKING
         };
         directionsService.route(request, function (response, status) {
@@ -79,26 +83,6 @@ $( document ).ready(function() {
         });
     }
 
-    function geoLocate(address) {
-        var url = "https://maps.googleapis.com/maps/api/geocode/json";
-        var request = $.ajax({
-            url: url,
-            method: "GET",
-            data: {address : address, key: gon.geocode_key }
-        });
-
-        request.done(function( msg ) {
-            var location = msg['results'][0]['geometry']['location'];
-            createMarker({lat: location['lat'], lng: location['lng']});
-            drawRoute({lat: location['lat'], lng: location['lng']});
-            publish({lat: location['lat'], lng: location['lng']});
-        });
-
-        request.fail(function( jqXHR, textStatus ) {
-            alert("Sorry, we couldn't find this address");
-        });
-    }
-
     google.maps.event.addListener(map, 'rightclick', function(event) {
         setMarker(event);
     });
@@ -109,9 +93,31 @@ $( document ).ready(function() {
         publish(event.latLng);
     }
 
+    function getAddresses(fields) {
+        $.each(fields, function( index, value ) {
+            if($(value).val() !== "") {
+                multipleDestinations.push($(value).val());
+            }
+        });
+        setMultipleDestinations();
+    }
+
+    function setMultipleDestinations() {
+        for (var i = 0; i < multipleDestinations.length; i++) {
+            var address = multipleDestinations[i];
+            if (address !== "") {
+                waypoints.push({
+                    location: address,
+                    stopover: true
+                });
+            }
+        }
+    }
+
     $('#address-submit').on( "click", function(e) {
         e.preventDefault();
-        geoLocate($('#address-input').val());
+        getAddresses($('.navbar-right').find('.address'));
+        drawRoute();
     });
 
 });

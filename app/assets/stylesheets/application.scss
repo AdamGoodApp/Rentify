@@ -39,7 +39,21 @@
   }
 }
 
-
 input#address-input {
   width: 250px;
+}
+
+.navbar-right {
+  position :relative;
+
+  #address-icon {
+    top: 0px;
+  }
+
+  #add-address {
+    width: 250px;
+    position: absolute;
+    top: 45px;
+    left: 55px;
+  }
 }
