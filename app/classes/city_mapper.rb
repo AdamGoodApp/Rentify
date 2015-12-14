@@ -6,7 +6,7 @@ class CityMapper
   def initialize(destination)
     @startcoord = "#{destination['start']['lat']},#{destination['start']['lng']}"
     @endcoord = "#{destination['end']['lat']},#{destination['end']['lng']}"
-    @time = destination["date"]
+    @time = destination["date"] || DateTime.now
     @key = ENV["citymapper_key"]
     @options = {
         query: {

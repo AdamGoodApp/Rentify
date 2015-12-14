@@ -42,18 +42,19 @@ $( document ).ready(function() {
             });
             destination.setMap(map);
         }
+        markers.push(destination);
 
         google.maps.event.addListener(destination, 'dragend', function(event) {
             drawRoute(event.latLng);
-            publish(event.latLng);
+            calculateTime({start: rentifyOffice, end: {lat: event.latLng.lat(), lng: event.latLng.lng()}});
         });
     }
 
-    function createMultipleMarkers(pos) {
+    function createMultipleMarkers(pos, time) {
         destination = new google.maps.Marker({
             draggable: false,
             position: pos,
-            title:"Destination",
+            title:"" + time,
             animation: google.maps.Animation.DROP,
             icon: "<%= asset_path('marker-go.png') %>"
         });
@@ -72,8 +73,7 @@ $( document ).ready(function() {
         request.done(function( msg ) {
             var location = msg['results'][0]['geometry']['location'];
             var date = $('#time-input').val();
-            publish(location, date);
-            createMultipleMarkers(location);
+            calculateTime({start: rentifyOffice, end: location, date: date});
         });
 
         request.fail(function( jqXHR, textStatus ) {
@@ -108,22 +108,15 @@ $( document ).ready(function() {
         });
     }
 
-    function publish(endPos, date) {
-        pubnub.publish({
-            channel: 'SubTest',
-            message: {start: rentifyOffice, end: endPos, date: date},
-            callback : function(m){console.log(m)}
-        });
-    }
-
     google.maps.event.addListener(map, 'rightclick', function(event) {
         setMarker(event);
     });
 
     function setMarker(event) {
+        clearMap();
         createMarker(event.latLng);
         drawRoute(event.latLng);
-        publish(event.latLng);
+        calculateTime({start: rentifyOffice, end: {lat: event.latLng.lat(), lng: event.latLng.lng()}});
     }
 
     function getAddresses(fields) {
@@ -156,6 +149,7 @@ $( document ).ready(function() {
     function clearMap() {
         jQuery(multipleDestinations = []);
         jQuery(waypoints = []);
+        $('.glyphicon-time p').html('');
         $.each(markers, function( index, value ) {
             value.setMap(null);
         });
@@ -168,5 +162,37 @@ $( document ).ready(function() {
         drawRoute();
         setMultipleMarkers();
     });
+
+
+    function calculateTime(destination) {
+        var request = $.ajax({
+            url: "/time",
+            method: "POST",
+            data: { destination : destination }
+        });
+
+        request.done(function( msg ) {
+            var time = parseInt($('.glyphicon-time p').html()) || 0;
+            var total = time += msg;
+
+            createMultipleMarkers(destination['end'], msg);
+
+            $('.glyphicon-time p').html(total + ' min');
+            $('.glyphicon-time').addClass('time-alert');
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Sorry we couldn't complete your request" );
+        });
+    }
+
+//Implement pub sub in the future for better controll and cleaner js files.
+//    function publish(endPos, date) {
+//        pubnub.publish({
+//            channel: 'SubTest',
+//            message: {start: rentifyOffice, end: endPos, date: date},
+//            callback : function(m){console.log(m)}
+//        });
+//    }
 
 });
