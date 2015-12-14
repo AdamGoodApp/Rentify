@@ -7,7 +7,7 @@ class RentifyController < ApplicationController
   end
 
   def calc_time()
-    CityMapper.new(destination_params, 2)
+    CityMapper.new(destination_params, 2).calculate_time!
   end
 
   private
