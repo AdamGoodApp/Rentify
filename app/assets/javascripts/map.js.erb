@@ -1,5 +1,9 @@
 $( document ).ready(function() {
-    var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers : true});
+
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+        suppressMarkers : true,
+        polylineOptions: { strokeColor: "#EF9024", strokeWeight: 5 }
+    });
     var directionsService = new google.maps.DirectionsService();
 
     var rentifyOffice = {lat:51.519974, lng: -0.098398};
@@ -38,6 +42,7 @@ $( document ).ready(function() {
 
         google.maps.event.addListener(destination, 'dragend', function(event) {
             drawRoute(event.latLng);
+            publish(event.latLng);
         });
     }
 
@@ -66,6 +71,14 @@ $( document ).ready(function() {
         });
     }
 
+    function publish(endPos) {
+        pubnub.publish({
+            channel: 'SubTest',
+            message: {start: rentifyOffice, end: endPos},
+            callback : function(m){console.log(m)}
+        });
+    }
+
     $("#add-marker").on( "click", function() {
         createMarker();
     });
@@ -73,6 +86,7 @@ $( document ).ready(function() {
     google.maps.event.addListener(map, 'rightclick', function(event) {
         createMarker(event.latLng);
         drawRoute(event.latLng);
+        publish(event.latLng);
     });
 
 

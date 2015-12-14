@@ -15,3 +15,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+pubnub = PUBNUB({
+  publish_key   : gon.pubnub_pub,
+  subscribe_key : gon.pubnub_sub
+});

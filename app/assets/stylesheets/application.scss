@@ -10,3 +10,18 @@
     width: 130px;
   }
 }
+
+.navbar-middle {
+  left: 50%;
+  margin-left: -50px;
+  position: absolute;
+  width: 100px;
+
+  p {
+    display: inline-block;
+  }
+
+  .glyphicon-time {
+    font-size: 20px;
+  }
+}
