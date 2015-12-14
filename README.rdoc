@@ -1,28 +1,37 @@
-== README
+== Rentify
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rentify helps negotiators meet landlord and tenants. Rentify calculates travel time from location to location.
 
-Things you may want to cover:
+==== Instructions
 
-* Ruby version
+* Enter date of departure
 
-* System dependencies
+* Enter address of destination
 
-* Configuration
+* Click the plus button near the GO. This will alow you to add more locations (Max of 6 due to google limitiations)
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* You can also right click anywhere on the map for a quick time estimate that is based on the current time now.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+==== Tech Stack:
+
+Built with Ruby on Rails serving an api to the front end.
+
+Front end built with Scss, JS, Bootstrap and Google maps API.
+
+The CityMapper class handles time travel calculation, this is written in ruby and is served to the front end via JSON.
+
+
+Notible gem mentions:
+
+* Figaro is a great gem to manage environment variables. If setting up the project locally, ensure to update config/application.yml to include your own keys.
+
+* Gon is used to allow access of ENV keys to the JS files. Gon variables are established in the Rentify controller.
+
+==== Future Improvments
+
+Clean JS code to mantain shorter and easier to read files. This can be solved by re-implementing PubSub which allows us to setup a subscribe and pubslishing system for easier concurrency between files, keeping our code dry.
+
+Re implement JS code, mainly Google map functions with a more oop approach vs functional. It will help cut down duplicate code.
+
+
