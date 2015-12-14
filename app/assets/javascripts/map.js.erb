@@ -11,6 +11,7 @@ $( document ).ready(function() {
     var destination;
     var multipleDestinations = [];
     var waypoints = [];
+    var markers = [];
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: rentifyOffice,
@@ -45,6 +46,36 @@ $( document ).ready(function() {
         google.maps.event.addListener(destination, 'dragend', function(event) {
             drawRoute(event.latLng);
             publish(event.latLng);
+        });
+    }
+
+    function createMultipleMarkers(pos) {
+        destination = new google.maps.Marker({
+            draggable: false,
+            position: pos,
+            title:"Destination",
+            animation: google.maps.Animation.DROP,
+            icon: "<%= asset_path('marker-go.png') %>"
+        });
+        destination.setMap(map);
+        markers.push(destination);
+    }
+
+    function geoLocate(address) {
+        var url = "https://maps.googleapis.com/maps/api/geocode/json";
+        var request = $.ajax({
+            url: url,
+            method: "GET",
+            data: {address : address, key: gon.geocode_key }
+        });
+
+        request.done(function( msg ) {
+            var location = msg['results'][0]['geometry']['location'];
+            createMultipleMarkers(location);
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert("Sorry, we couldn't find this address");
         });
     }
 
@@ -114,10 +145,26 @@ $( document ).ready(function() {
         }
     }
 
+    function setMultipleMarkers() {
+        $.each(multipleDestinations, function( index, value ) {
+            geoLocate(value);
+        });
+    }
+
+    function clearMap() {
+        jQuery(multipleDestinations = []);
+        jQuery(waypoints = []);
+        $.each(markers, function( index, value ) {
+            value.setMap(null);
+        });
+    }
+
     $('#address-submit').on( "click", function(e) {
         e.preventDefault();
+        clearMap();
         getAddresses($('.navbar-right').find('.address'));
         drawRoute();
+        setMultipleMarkers();
     });
 
 });

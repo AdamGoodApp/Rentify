@@ -23,5 +23,7 @@ pubnub = PUBNUB({
 });
 
 $('.glyphicon-plus').on( "click", function(e) {
-  $('#add-address').append( "<input type='text' class='form-control address additional-address' placeholder='Address'>" );
+  if($('.navbar-right').find('.address').length < 7 ) {
+    $('#add-address').append( "<input type='text' class='form-control address additional-address' placeholder='Address'>" );
+  }
 });
