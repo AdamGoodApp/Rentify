@@ -19,7 +19,8 @@ $( document ).ready(function() {
     });
 
     request.done(function( msg ) {
-      alert( msg );
+      $('.glyphicon-time p').html(msg + ' min');
+      $('.glyphicon-time').addClass('time-alert');
     });
 
     request.fail(function( jqXHR, textStatus ) {

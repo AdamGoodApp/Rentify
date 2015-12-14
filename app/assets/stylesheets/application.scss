@@ -13,15 +13,28 @@
 
 .navbar-middle {
   left: 50%;
-  margin-left: -50px;
+  margin: 10px 0 0 -50px;
   position: absolute;
-  width: 100px;
+  width: 105px;
 
   p {
     display: inline-block;
+    margin-left: 5px;
+    vertical-align: middle;
+    word-spacing: -15px;
   }
 
   .glyphicon-time {
+    display: none;
     font-size: 20px;
+  }
+
+  .time-alert {
+    animation: time-alert 1s linear 2;
+    display: block;
+  }
+
+  @keyframes time-alert {
+    50% { opacity: 0.0; }
   }
 }

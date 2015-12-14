@@ -3,7 +3,7 @@ class CityMapper
   include HTTParty
   base_uri 'https://developer.citymapper.com'
 
-  def initialize(destination, date)
+  def initialize(destination)
     @startcoord = "#{destination['start']['lat']},#{destination['start']['lng']}"
     @endcoord = "#{destination['end']['lat']},#{destination['end']['lng']}"
     @time = "2014-11-06T19:00:02-0500"
